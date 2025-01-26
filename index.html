@@ -1,0 +1,163 @@
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Job Requirements Analyzer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Анализатор требований IT вакансий</h1>
+      <div class="salary-range">
+        <span>Целевая зарплата: </span>
+        <input type="number" id="salaryMin" value="180000" step="10000">
+        <span> - </span>
+        <input type="number" id="salaryMax" value="220000" step="10000">
+        <span> ₽</span>
+      </div>
+    </header>
+
+    <div class="filters">
+      <div class="filter-group">
+        <label>Специализация:</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" value="devops" checked> DevOps</label>
+          <label><input type="checkbox" value="sysadmin" checked> Системное администрирование</label>
+          <label><input type="checkbox" value="network" checked> Сетевой инженер</label>
+          <label><input type="checkbox" value="backend" checked> Backend разработчик</label>
+          <label><input type="checkbox" value="frontend" checked> Frontend разработчик</label>
+          <label><input type="checkbox" value="fullstack" checked> Fullstack разработчик</label>
+          <label><input type="checkbox" value="data_engineer" checked> Data Engineer</label>
+          <label><input type="checkbox" value="data_scientist" checked> Data Scientist</label>
+          <label><input type="checkbox" value="qa" checked> QA инженер</label>
+          <label><input type="checkbox" value="security" checked> IT Security</label>
+          <label><input type="checkbox" value="dba" checked> Database Administrator</label>
+          <label><input type="checkbox" value="mobile" checked> Mobile разработчик</label>
+        </div>
+      </div>
+      
+      <button id="updateData" class="update-btn">Обновить данные</button>
+      <button id="showDetailedSkills" class="detail-btn">Подробный анализ навыков</button>
+    </div>
+
+    <main>
+      <div class="stats-container">
+        <div class="stat-card">
+          <h3>Топ требуемых навыков</h3>
+          <canvas id="skillsChart" class="chart"></canvas>
+        </div>
+        
+        <div class="stat-card">
+          <h3>Средняя зарплата по специализациям</h3>
+          <canvas id="salaryChart" class="chart"></canvas>
+        </div>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-card">
+          <h3>Востребованность специальностей на рынке</h3>
+          <div class="legend-container">
+            <div class="legend-item">
+              <span class="legend-color" style="background-color: #2ecc71;"></span>
+              <span>Растущий спрос</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color" style="background-color: #3498db;"></span>
+              <span>Стабильный спрос</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color" style="background-color: #e74c3c;"></span>
+              <span>Снижающийся спрос</span>
+            </div>
+          </div>
+          <canvas id="demandChart" class="chart"></canvas>
+        </div>
+      </div>
+
+      <div class="requirements-list">
+        <h2>Актуальные требования</h2>
+        <div id="requirementsList"></div>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-card salary-trends">
+          <h3>Динамика зарплат по специализациям</h3>
+          <canvas id="salaryTrendsChart" class="chart"></canvas>
+        </div>
+      </div>
+
+      <div class="top-jobs-container">
+        <div class="top-jobs-header">
+          <h2>Топ востребованных IT вакансий</h2>
+        </div>
+        
+        <div class="stats-container">
+          <div class="stat-card">
+            <h3>Сравнение зарплат по топовым позициям</h3>
+            <canvas id="topJobsChart" class="chart"></canvas>
+          </div>
+        </div>
+
+        <div id="topJobsList"></div>
+      </div>
+
+      <div id="detailedAnalysis" class="detailed-analysis hidden">
+        <h2>Подробный анализ навыков</h2>
+        <div class="skills-categories">
+          <div class="category">
+            <h3>Основные технологии</h3>
+            <div id="coreTechnologies"></div>
+          </div>
+          <div class="category">
+            <h3>Инструменты</h3>
+            <div id="tools"></div>
+          </div>
+          <div class="category">
+            <h3>Методологии</h3>
+            <div id="methodologies"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="regional-analysis">
+        <h2>Региональный анализ</h2>
+        
+        <div id="regionalStats"></div>
+
+        <div class="regional-charts-container">
+          <div class="regional-chart-wrapper">
+            <h3>Зарплаты по регионам</h3>
+            <canvas id="regionalAnalysisChart" class="chart"></canvas>
+          </div>
+          
+          <div class="regional-chart-wrapper">
+            <h3>Востребованность по регионам</h3>
+            <canvas id="regionalDemandChart" class="chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-analysis">
+        <h2>Анализ ключевых навыков</h2>
+        
+        <div class="stats-container">
+          <div class="stat-card">
+            <h3>Текущая востребованность навыков</h3>
+            <canvas id="currentSkillsChart" class="chart"></canvas>
+          </div>
+          
+          <div class="stat-card">
+            <h3>Динамика популярности навыков за последние 6 месяцев</h3>
+            <canvas id="skillsTrendsChart" class="chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
